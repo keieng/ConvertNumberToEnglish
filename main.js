@@ -7,49 +7,60 @@ reader.on("line", function (line) {
   lines.push(line);
 });
 reader.on("close", function () {
-  // 入力を受け取る
-  const input = lines[0];
-  // // 入力を小数点前後で配列に格納
-  const inputPointSplit = input.split(".");
+  try {
+    const line = lines[0];
+    if (line == null) throw "nullException";
+    // 入力を受け取る
+    const input = line.trim();
+    if (input == "") throw "blankException";
+    // 0以上の数値以外エラー処理
+    const isOverZero = Math.sign(input) === 1 || Math.sign(input) === 0;
+    if (!isOverZero) throw "notNumberException";
 
-  // 小数点以下が存在するかの判定
-  const isDecimal = inputPointSplit.length === 2;
+    // // 入力を小数点前後で配列に格納
+    const inputPointSplit = input.split(".");
 
-  // 整数部分を一文字づつ配列に格納
-  const integerTexts = [...inputPointSplit[0]];
+    // 小数点以下が存在するかの判定
+    const isDecimal = inputPointSplit.length === 2;
 
-  // 整数部分を数値の配列にして格納
-  const integerNumbers = [];
-  integerTexts.forEach((v) => {
-    integerNumbers.push(Number(v));
-  });
-  // 下の位からの配列にする
-  integerNumbers.reverse();
-  const integerEnglish = integerToEnglish(integerNumbers);
-  integerEnglish.reverse();
-  integerEnglish[0] =
-    integerEnglish[0].charAt(0).toUpperCase() + integerEnglish[0].slice(1);
+    // 整数部分を一文字づつ配列に格納
+    const integerTexts = [...inputPointSplit[0]];
 
-  const words = [];
-  words.push(...integerEnglish);
-
-  if (isDecimal) {
-    // 小数点以下を一文字づつ配列に格納
-    const decimalTexts = [...inputPointSplit[1]];
-    // 小数点以下を数値の配列にして格納
-    const decimalNumbers = [];
-    decimalTexts.forEach((v) => {
-      decimalNumbers.push(Number(v));
+    // 整数部分を数値の配列にして格納
+    const integerNumbers = [];
+    integerTexts.forEach((v) => {
+      integerNumbers.push(Number(v));
     });
     // 下の位からの配列にする
-    decimalNumbers.reverse();
+    integerNumbers.reverse();
+    const integerEnglish = integerToEnglish(integerNumbers);
+    integerEnglish.reverse();
+    integerEnglish[0] =
+      integerEnglish[0].charAt(0).toUpperCase() + integerEnglish[0].slice(1);
 
-    const decimalEnglish = decimalToEnglish(decimalNumbers);
-    decimalEnglish.reverse();
-    words.push("point", ...decimalEnglish);
+    const words = [];
+    words.push(...integerEnglish);
+
+    if (isDecimal) {
+      // 小数点以下を一文字づつ配列に格納
+      const decimalTexts = [...inputPointSplit[1]];
+      // 小数点以下を数値の配列にして格納
+      const decimalNumbers = [];
+      decimalTexts.forEach((v) => {
+        decimalNumbers.push(Number(v));
+      });
+      // 下の位からの配列にする
+      decimalNumbers.reverse();
+
+      const decimalEnglish = decimalToEnglish(decimalNumbers);
+      decimalEnglish.reverse();
+      words.push("point", ...decimalEnglish);
+    }
+
+    return console.log(...words);
+  } catch (error) {
+    return console.log(-1);
   }
-
-  return console.log(...words);
 });
 
 const integerToEnglish = (numberArray) => {
