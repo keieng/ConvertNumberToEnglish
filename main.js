@@ -7,8 +7,11 @@ reader.on("line", function (line) {
   lines.push(line);
 });
 reader.on("close", function () {
+  main(lines[0]);
+});
+const main = (lineInput) => {
   try {
-    const line = lines[0];
+    const line = lineInput;
     if (line == null) throw "nullException";
     // 入力を受け取る
     const input = line.trim();
@@ -57,11 +60,14 @@ reader.on("close", function () {
       words.push("point", ...decimalEnglish);
     }
 
-    return console.log(...words);
+    const outputText = words.join(" ");
+    // return console.log(outputText);
+    return outputText;
   } catch (error) {
-    return console.log(-1);
+    // return console.log(-1);
+    return -1;
   }
-});
+};
 
 const integerToEnglish = (numberArray) => {
   const words = [];
@@ -233,3 +239,5 @@ const specialWord = (number) => {
       break;
   }
 };
+
+module.exports = main;
