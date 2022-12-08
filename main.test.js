@@ -22,5 +22,5 @@ test("0が続く", () => {
 });
 
 test("0が続く", () => {
-  expect(main("10000000000")).toBe("One hundred billion");
+  expect(main("100000000000")).toBe("One hundred billion");
 });
