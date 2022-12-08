@@ -11,3 +11,16 @@ test("小数点のテスト", () => {
 test("数値以外のテスト", () => {
   expect(main("abc")).toBe(-1);
 });
+
+test("空文字のテスト", () => {
+  expect(main("")).toBe(-1);
+});
+
+// 0が続く
+test("0が続く", () => {
+  expect(main("100000000")).toBe("One hundred million");
+});
+
+test("0が続く", () => {
+  expect(main("10000000000")).toBe("One hundred billion");
+});

@@ -79,6 +79,11 @@ const integerToEnglish = (numberArray) => {
       let word = "";
       const commaWordsIndex = Math.floor(i / 3);
       const commaWord = commaWords[commaWordsIndex];
+      // commaWordの連続の判定
+      if (commaWordsIndex >= 2)
+        words[words.length - 1] === commaWords[commaWordsIndex - 1]
+          ? words.pop()
+          : "";
       switch (i % 3) {
         case 0:
           if (numberArray[i + 1] === 1) {
@@ -102,6 +107,7 @@ const integerToEnglish = (numberArray) => {
         default:
           break;
       }
+      // if (word === words[words.length - 1])
       if (word !== "") words.push(word);
     });
   }
