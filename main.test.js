@@ -1,4 +1,4 @@
-const main = require("./main");
+import { main } from "./main";
 
 test("整数のテスト", () => {
   expect(main("123")).toBe("One hundred twenty three");
